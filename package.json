@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "webpack --mode production",
-    "run": "node dist/main.js"
+    "run": "node dist/main.js",
+    "format": "elm-format --yes src/"
   },
   "devDependencies": {
     "elm": "^0.19.1-5",

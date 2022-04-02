@@ -1,9 +1,12 @@
 port module Worker exposing (main)
 
+import Main
 import Platform
 
 
 port start : (String -> msg) -> Sub msg
+
+
 port responce : String -> Cmd msg
 
 
@@ -16,27 +19,24 @@ type Msg
 
 
 init : () -> ( Model, Cmd Msg )
-init flags =
+init _ =
     ( {}, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        StartMsg text ->
+        StartMsg input ->
             let
+                res : String
                 res =
-                    text
-                        |> String.replace "\n" ""
-                        |> String.toInt
-                        |> Maybe.map ((\n -> n * n) >> String.fromInt)
-                        |> Maybe.withDefault (text++" is not Int")
+                    Main.proc input |> Maybe.withDefault "nothing"
             in
             ( model, responce res )
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     start StartMsg
 
 
